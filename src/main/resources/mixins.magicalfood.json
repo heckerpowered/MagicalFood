@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "package": "heckerpowered.magicalfood.common.core.mixin",
+    "refmap": "mixins.magicalfood.refmap.json",
+    "mixins": [],
+    "client": [],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8",
+    "compatibilityLevel": "JAVA_17"
+}
