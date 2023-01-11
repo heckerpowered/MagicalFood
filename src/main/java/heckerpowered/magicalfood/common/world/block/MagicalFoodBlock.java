@@ -59,7 +59,7 @@ public final class MagicalFoodBlock {
             MagicalFood.MODID);
 
     /**
-     * See {@link MagicalFarmBlock} for details related to this square
+     * See {@link MagicalFarmBlock} for details related to this block
      */
     public static final RegistryObject<MagicalFarmBlock> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register(
             "magical_farm_block", MagicalFarmBlock::new);
