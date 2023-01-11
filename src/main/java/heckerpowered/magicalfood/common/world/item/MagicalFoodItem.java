@@ -21,11 +21,15 @@ package heckerpowered.magicalfood.common.world.item;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import heckerpowered.magicalfood.common.MagicalFood;
+import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
+import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * The register class of magical food items, any items (including block in the
@@ -48,4 +52,11 @@ public final class MagicalFoodItem {
      */
     public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS,
             MagicalFood.MODID);
+
+    /**
+     * The magical farm block in the form of item, see {@link MagicalFarmBlock} for
+     * details related to this block
+     */
+    public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farm_block",
+            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
 }
