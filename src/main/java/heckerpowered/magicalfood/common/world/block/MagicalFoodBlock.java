@@ -47,22 +47,22 @@ import net.minecraftforge.registries.RegistryObject;
 public final class MagicalFoodBlock {
 
     /**
-     * Do not let anyone instantiate this class
-     */
-    private MagicalFoodBlock() {
-    }
-
-    /**
      * The deferred register of all the items derived from {@code MagicalFood} mod.
      */
     public static final DeferredRegister<Block> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS,
             MagicalFood.MODID);
 
     /**
+     * Do not let anyone instantiate this class
+     */
+    private MagicalFoodBlock() {
+    }
+
+    /**
      * See {@link MagicalFarmBlock} for details related to this block
      */
     public static final RegistryObject<MagicalFarmBlock> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register(
-            "magical_farm_block", MagicalFarmBlock::new);
+            "magical_farmland", MagicalFarmBlock::new);
 
     /**
      * A utility method for block registration, referencing to this method will be

@@ -16,49 +16,43 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.item;
+package heckerpowered.magicalfood.common.world.enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import heckerpowered.magicalfood.common.MagicalFood;
-import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * The register class of magical food items, any items (including block in the
- * form of items) derived from {@code MagicalFood} mod should be registered at
- * this class.
+ * {@code MagicalFood} mod's enchantment categories, which is mainly constructed
+ * an enchantment category that can only be applied to hoes.
  *
  * @author Heckerpowered
+ * @see EnchantmentCategory
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-public final class MagicalFoodItem {
-
-    /**
-     * The deferred register of all the items derived from {@code MagicalFood} mod.
-     */
-    public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS,
-            MagicalFood.MODID);
+public final class MagicalFoodEnchantmentCategory {
 
     /**
      * Do not let anyone instantiate this class
      */
-    private MagicalFoodItem() {
+    private MagicalFoodEnchantmentCategory() {
     }
 
     /**
-     * The magical farm block in the form of item, see {@link MagicalFarmBlock} for
-     * details related to this block
+     * An enchantment category that only allows enchantments to be applied to hoes
      */
-    public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farmland",
-            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
+    public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", item -> item instanceof HoeItem);
+
+    /**
+     * Slots that enchantments related to hoes applicable, the specific values are
+     * main hand and off hand, do not modify this field in any means.
+     */
+    public static final EquipmentSlot[] HOE_SLOT = new EquipmentSlot[] { EquipmentSlot.MAINHAND,
+            EquipmentSlot.OFFHAND };
 }

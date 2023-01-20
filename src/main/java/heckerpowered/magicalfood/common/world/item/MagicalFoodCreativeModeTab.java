@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.jetbrains.annotations.NotNull;
 
 import heckerpowered.magicalfood.common.MagicalFood;
+import heckerpowered.magicalfood.common.lang.MagicalFoodLang;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.ItemStack;
@@ -43,6 +44,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @FieldsAreNonnullByDefault
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class MagicalFoodCreativeModeTab {
+
+    /**
+     * Do not let anyone instantiate this class
+     */
+    private MagicalFoodCreativeModeTab() {
+    }
+
     /**
      * This function is called when creative mode tabs can be registered
      *
@@ -60,6 +68,8 @@ public final class MagicalFoodCreativeModeTab {
                 // The icon supplier is lazy-evaluated, so we just simply construct a new
                 // ItemStack
                 builder -> builder.icon(() -> new ItemStack(MagicalFoodItem.MAGICAL_FARM_BLOCK.get()))
+                        // Set the title of the creative mode tab
+                        .title(MagicalFoodLang.CREATIVE_MODE_TAB_TITLE)
                         // Add items to display in the tab, the displayItems method accepts a generator
                         // that accepts three parameters.
                         //

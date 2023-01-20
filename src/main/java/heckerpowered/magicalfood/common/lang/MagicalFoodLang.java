@@ -16,49 +16,38 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.item;
+package heckerpowered.magicalfood.common.lang;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import heckerpowered.magicalfood.common.MagicalFood;
-import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 /**
- * The register class of magical food items, any items (including block in the
- * form of items) derived from {@code MagicalFood} mod should be registered at
- * this class.
+ * {@code MagicalFood} mod's language manager, any features related to
+ * localization should be implemented from this class. For example, instead of
+ * creating a new Component object manually, the title of the creative mode tab
+ * should refer to the {@link #CREATIVE_MODE_TAB_TITLE} {@link Component}
+ * instance provided by this type.
  *
  * @author Heckerpowered
+ * @see Component
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-public final class MagicalFoodItem {
-
-    /**
-     * The deferred register of all the items derived from {@code MagicalFood} mod.
-     */
-    public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS,
-            MagicalFood.MODID);
-
+public final class MagicalFoodLang {
     /**
      * Do not let anyone instantiate this class
      */
-    private MagicalFoodItem() {
+    private MagicalFoodLang() {
     }
 
     /**
-     * The magical farm block in the form of item, see {@link MagicalFarmBlock} for
-     * details related to this block
+     * The title of the creative mode tab, this Component is mutable, but do not
+     * modify it
      */
-    public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farmland",
-            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
+    public static final MutableComponent CREATIVE_MODE_TAB_TITLE = Component.translatable("itemGroup.magicalfood");
 }

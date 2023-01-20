@@ -16,49 +16,37 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.item;
+package heckerpowered.magicalfood.common.world.enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import heckerpowered.magicalfood.common.MagicalFood;
-import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
- * The register class of magical food items, any items (including block in the
- * form of items) derived from {@code MagicalFood} mod should be registered at
- * this class.
+ * The register class of magical food enchantments, any enchantments derived
+ * from {@code MagicalFood} mod should be registered at this class.
  *
  * @author Heckerpowered
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-public final class MagicalFoodItem {
+public final class MagicalFoodEnchantment {
 
     /**
      * The deferred register of all the items derived from {@code MagicalFood} mod.
      */
-    public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS,
-            MagicalFood.MODID);
+    public static final DeferredRegister<Enchantment> DEFERRED_REGISTER = DeferredRegister
+            .create(ForgeRegistries.ENCHANTMENTS, MagicalFood.MODID);
 
     /**
      * Do not let anyone instantiate this class
      */
-    private MagicalFoodItem() {
+    private MagicalFoodEnchantment() {
     }
-
-    /**
-     * The magical farm block in the form of item, see {@link MagicalFarmBlock} for
-     * details related to this block
-     */
-    public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farmland",
-            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
 }

@@ -16,49 +16,33 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.item;
+package heckerpowered.magicalfood.common.world.enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import heckerpowered.magicalfood.common.MagicalFood;
-import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.fml.common.Mod;
 
 /**
- * The register class of magical food items, any items (including block in the
- * form of items) derived from {@code MagicalFood} mod should be registered at
- * this class.
+ * Represents an enchantment that converts soil into magical plowing when the
+ * hoe is plowing.
  *
  * @author Heckerpowered
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-public final class MagicalFoodItem {
+@Mod.EventBusSubscriber
+public final class MagicalHoeEnchantment extends Enchantment {
 
     /**
-     * The deferred register of all the items derived from {@code MagicalFood} mod.
+     * Constructs a new magical hoe enchantment, this constructor should not be
+     * called manually
      */
-    public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS,
-            MagicalFood.MODID);
-
-    /**
-     * Do not let anyone instantiate this class
-     */
-    private MagicalFoodItem() {
+    public MagicalHoeEnchantment() {
+        super(Rarity.COMMON, MagicalFoodEnchantmentCategory.HOE, MagicalFoodEnchantmentCategory.HOE_SLOT);
     }
 
-    /**
-     * The magical farm block in the form of item, see {@link MagicalFarmBlock} for
-     * details related to this block
-     */
-    public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farmland",
-            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
 }
