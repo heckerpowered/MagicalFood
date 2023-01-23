@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import heckerpowered.magicalfood.common.world.item.MagicalFoodItem;
+import heckerpowered.magicalfood.common.world.item.enchantment.MagicalFoodEnchantment;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +56,7 @@ public final class MagicalFood {
         // Add deferred registers' event handlers to the event bus
         MagicalFoodItem.DEFERRED_REGISTER.register(eventBus);
         MagicalFoodBlock.DEFERRED_REGISTER.register(eventBus);
+        MagicalFoodEnchantment.DEFERRED_REGISTER.register(eventBus);
     }
 
     /**

@@ -16,43 +16,45 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.enchantment;
+package heckerpowered.magicalfood.common.world.item.enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import heckerpowered.magicalfood.common.MagicalFood;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
- * {@code MagicalFood} mod's enchantment categories, which is mainly constructed
- * an enchantment category that can only be applied to hoes.
+ * The register class of magical food enchantments, any enchantments derived
+ * from {@code MagicalFood} mod should be registered at this class.
  *
  * @author Heckerpowered
- * @see EnchantmentCategory
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-public final class MagicalFoodEnchantmentCategory {
+public final class MagicalFoodEnchantment {
+
+    /**
+     * The deferred register of all the items derived from {@code MagicalFood} mod.
+     */
+    public static final DeferredRegister<Enchantment> DEFERRED_REGISTER = DeferredRegister
+            .create(ForgeRegistries.ENCHANTMENTS, MagicalFood.MODID);
 
     /**
      * Do not let anyone instantiate this class
      */
-    private MagicalFoodEnchantmentCategory() {
+    private MagicalFoodEnchantment() {
     }
 
     /**
-     * An enchantment category that only allows enchantments to be applied to hoes
+     * The magical hoe enchantment, see {@link MagicalHoeEnchantment} for more
+     * details related to this enchantment.
      */
-    public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", item -> item instanceof HoeItem);
-
-    /**
-     * Slots that enchantments related to hoes applicable, the specific values are
-     * main hand and off hand, do not modify this field in any means.
-     */
-    public static final EquipmentSlot[] HOE_SLOT = new EquipmentSlot[] { EquipmentSlot.MAINHAND,
-            EquipmentSlot.OFFHAND };
+    public static final RegistryObject<MagicalHoeEnchantment> MAGIC_HOE = DEFERRED_REGISTER.register("magical_hoe",
+            MagicalHoeEnchantment::new);
 }

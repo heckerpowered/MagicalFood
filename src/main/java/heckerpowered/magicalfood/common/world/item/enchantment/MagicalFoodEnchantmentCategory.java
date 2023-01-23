@@ -16,33 +16,43 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package heckerpowered.magicalfood.common.world.enchantment;
+package heckerpowered.magicalfood.common.world.item.enchantment;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * Represents an enchantment that converts soil into magical plowing when the
- * hoe is plowing.
+ * {@code MagicalFood} mod's enchantment categories, which is mainly constructed
+ * an enchantment category that can only be applied to hoes.
  *
  * @author Heckerpowered
+ * @see EnchantmentCategory
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-@Mod.EventBusSubscriber
-public final class MagicalHoeEnchantment extends Enchantment {
+public final class MagicalFoodEnchantmentCategory {
 
     /**
-     * Constructs a new magical hoe enchantment, this constructor should not be
-     * called manually
+     * Do not let anyone instantiate this class
      */
-    public MagicalHoeEnchantment() {
-        super(Rarity.COMMON, MagicalFoodEnchantmentCategory.HOE, MagicalFoodEnchantmentCategory.HOE_SLOT);
+    private MagicalFoodEnchantmentCategory() {
     }
 
+    /**
+     * An enchantment category that only allows enchantments to be applied to hoes
+     */
+    public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", item -> item instanceof HoeItem);
+
+    /**
+     * Slots that enchantments related to hoes applicable, the specific values are
+     * main hand and off hand, do not modify this field in any means.
+     */
+    public static final EquipmentSlot[] HOE_SLOT = new EquipmentSlot[] { EquipmentSlot.MAINHAND,
+            EquipmentSlot.OFFHAND };
 }

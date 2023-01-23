@@ -20,6 +20,8 @@ package heckerpowered.magicalfood.common.world.item;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.jetbrains.annotations.NotNull;
+
 import heckerpowered.magicalfood.common.MagicalFood;
 import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
 import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
@@ -27,6 +29,7 @@ import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -60,5 +63,15 @@ public final class MagicalFoodItem {
      * details related to this block
      */
     public static final RegistryObject<BlockItem> MAGICAL_FARM_BLOCK = DEFERRED_REGISTER.register("magical_farmland",
-            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()));
+            () -> new BlockItem(MagicalFoodBlock.MAGICAL_FARM_BLOCK.get(), new Item.Properties()) {
+                /**
+                 * Returns {@code true} if this item has an enchantment glint. By default, this
+                 * returns <code>stack.isItemEnchanted()</code>, but other items can override it
+                 * (for instance, written books always return true).
+                 */
+                @Override
+                public boolean isFoil(@NotNull final ItemStack stack) {
+                    return true;
+                }
+            });
 }
