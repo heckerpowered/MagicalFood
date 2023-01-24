@@ -26,10 +26,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import heckerpowered.magicalfood.common.world.block.MagicalFarmBlock;
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import heckerpowered.magicalfood.common.world.item.enchantment.MagicalFoodEnchantment;
 import heckerpowered.magicalfood.common.world.item.enchantment.MagicalHoeEnchantment;
+import heckerpowered.magicalfood.common.world.level.block.MagicalFarmBlock;
+import heckerpowered.magicalfood.common.world.level.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.InteractionResult;

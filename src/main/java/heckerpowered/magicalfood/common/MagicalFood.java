@@ -22,9 +22,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.jetbrains.annotations.NotNull;
 
-import heckerpowered.magicalfood.common.world.block.MagicalFoodBlock;
 import heckerpowered.magicalfood.common.world.item.MagicalFoodItem;
 import heckerpowered.magicalfood.common.world.item.enchantment.MagicalFoodEnchantment;
+import heckerpowered.magicalfood.common.world.level.block.MagicalFoodBlock;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.ResourceLocation;
