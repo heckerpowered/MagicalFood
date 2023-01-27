@@ -18,13 +18,26 @@
 */
 package heckerpowered.magicalfood.common.world.level.block;
 
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.jetbrains.annotations.NotNull;
+
+import heckerpowered.magicalfood.common.registries.MagicalFoodRegistries;
+import heckerpowered.magicalfood.common.world.level.block.state.MagicalFarmBlockState;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
 
 /**
@@ -47,5 +60,170 @@ public final class MagicalFarmBlock extends FarmBlock {
         // MagicalFoodBlock class.
         super(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL)
                 .isViewBlocking(MagicalFoodBlock::always).isSuffocating(MagicalFoodBlock::always));
+        registerDefaultState(new StateDefinition.Builder<Block, BlockState>(this)
+                .create(Block::defaultBlockState, (owner, values,
+                        propertiesCodec) -> (BlockState) new MagicalFarmBlockState(owner, values, propertiesCodec))
+                .any());
+    }
+
+    /**
+     *
+     *
+     * @author Heckerpowered
+     * @implNote
+     */
+    @ParametersAreNonnullByDefault
+    @MethodsReturnNonnullByDefault
+    @FieldsAreNonnullByDefault
+    public static final class FeatureData {
+
+        private static Feature[] registeredFeatures;
+
+        /**
+         * A {@link BitSet} that stores features. To query whether a feature is enabled,
+         * use {@link BitSet#get} method. Where the integer parameter is the feature's
+         * ID.
+         */
+        private final BitSet featureSet;
+
+        /**
+         * Features that are enabled, cached for performance.
+         */
+        private List<Feature> features;
+
+        /**
+         * Constructs a new feature data, with the count of features as the size of
+         * features data.
+         */
+        public FeatureData() {
+            featureSet = new BitSet(Feature.featureCount);
+        }
+
+        /**
+         * Constructs a new feature data with previously stored data, normally this
+         * method should be called on load.
+         *
+         * @param data The previously stored feature data, a long array containing a
+         *             sequence of bits.
+         */
+        public FeatureData(long[] data) {
+            featureSet = BitSet.valueOf(data);
+
+            // Cache for performance
+            features = getFeaturesEnabled();
+        }
+
+        /**
+         * Get the feature data.
+         *
+         * @return The feature data, a long array containing a sequence of bits.
+         */
+        public final long[] getData() {
+            return featureSet.toLongArray();
+        }
+
+        /**
+         * Get features that are currently enabled.
+         *
+         * @return The features that are currently enabled
+         */
+        private final List<Feature> getFeaturesEnabled() {
+            // Allocate a new list to store enabled features, with the the number of
+            // features that enabled as the initial list size.
+            final var list = new ArrayList<Feature>(featureSet.cardinality());
+
+            // Iterate over the true bits in a BitSet, true bits means enabled features
+            for (var index = featureSet.nextSetBit(0); index >= 0; index = featureSet.nextSetBit(index + 1)) {
+                list.add(getFeature(index));
+            }
+
+            return list;
+        }
+
+        /**
+         * Returns a boolean that indicates whether the specified feature is enabled.
+         *
+         * @param featureID The feature ID
+         * @return {@code true} if the feature is enabled, {@code false} otherwise
+         * @throws IndexOutOfBoundsException if the specified ID is negative
+         */
+        public final boolean isFeatureEnabled(@Nonnegative final int featureID) {
+            return featureSet.get(featureID);
+        }
+
+        /**
+         * Enable the specified feature.
+         *
+         * @param featureID The feature ID
+         * @throws IndexOutOfBoundsException if the specified ID is negative
+         */
+        public final void enableFeature(@Nonnegative final int featureID) {
+            // Determine whether the feature is already enabled
+            if (isFeatureEnabled(featureID)) {
+                return;
+            }
+
+            featureSet.set(featureID);
+            features.add(getFeature(featureID));
+        }
+
+        /**
+         * Disable the specified feature.
+         *
+         * @param featureID The feature ID
+         * @throws IndexOutOfBoundsException if the specified ID is negative
+         */
+        public final void disableFeature(@Nonnegative final int featureID) {
+            featureSet.clear(featureID);
+            features.remove(getFeature(featureID));
+        }
+
+        /**
+         * Get feature by the specified ID
+         *
+         * @param featureID The feature ID
+         * @return The feature with the specified ID
+         */
+        public static final @NotNull Feature getFeature(@Nonnegative final int featureID) {
+            // Determine if the registered features is cached
+            if (registeredFeatures == null) {
+                // Get all registered features
+                final var registeredFeatures = MagicalFoodRegistries.FARM_FEATURES.getValues();
+
+                // Allocate a new feature array for index access
+                FeatureData.registeredFeatures = new Feature[registeredFeatures.size()];
+
+                // Copy the features in the collection to the array
+                registeredFeatures.toArray(FeatureData.registeredFeatures);
+            }
+
+            return FeatureData.getFeature(featureID);
+        }
+    }
+
+    public static class Feature {
+        /**
+         * The count of features, each of which occupies one bit. For memory alignment
+         * reasons, the size of the occupied bits is a multiple of 8.
+         */
+        static int featureCount;
+
+        /**
+         * Assign a new feature ID, starting from 0. The feature ID is continuous.
+         *
+         * @return
+         */
+        protected static final int getFeatureId() {
+            return featureCount++;
+        }
+
+        @Override
+        public final boolean equals(@Nullable final Object object) {
+            if (object instanceof final Feature feature) {
+                return feature.getClass() == this.getClass();
+            }
+
+            return false;
+        }
     }
 }

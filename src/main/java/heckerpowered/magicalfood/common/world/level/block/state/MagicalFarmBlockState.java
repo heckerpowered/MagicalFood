@@ -20,6 +20,8 @@ package heckerpowered.magicalfood.common.world.level.block.state;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 
@@ -27,16 +29,31 @@ import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 
+/**
+ *
+ */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
 public final class MagicalFarmBlockState extends BlockState {
 
-    public MagicalFarmBlockState(Block p_61042_, ImmutableMap<Property<?>, Comparable<?>> p_61043_,
-            MapCodec<BlockState> p_61044_) {
-        super(p_61042_, p_61043_, p_61044_);
+    /**
+     * Construct a new {@link MagicalFarmBlockState}, normally this constructor
+     * should be passed into {@link StateDefinition.Builder#Builder} constructor in
+     * the form of reference.
+     *
+     * @param owner           Represents the block that this state belongs to.
+     * @param values          Represents the properties and values of this block
+     *                        state.
+     * @param propertiesCodec Represents the codec used to encode and decode this
+     *                        block state.
+     */
+    public MagicalFarmBlockState(@NotNull final Block owner,
+            @NotNull final ImmutableMap<Property<?>, Comparable<?>> values,
+            @NotNull final MapCodec<BlockState> propertiesCodec) {
+        super(owner, values, propertiesCodec);
     }
-
 }
